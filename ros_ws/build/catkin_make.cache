@@ -1,0 +1,2 @@
+ear_control:gas_monitoring:light_control
+-DCATKIN_DEVEL_PREFIX=/home/punit/ros_ws/devel -DCMAKE_INSTALL_PREFIX=/home/punit/ros_ws/install -G Unix Makefiles

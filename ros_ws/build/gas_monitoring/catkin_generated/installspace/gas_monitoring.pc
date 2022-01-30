@@ -1,0 +1,8 @@
+prefix=/home/punit/ros_ws/install
+
+Name: gas_monitoring
+Description: Description of gas_monitoring
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,10 @@
+# CMake generated Testfile for 
+# Source directory: /home/punit/ros_ws/src
+# Build directory: /home/punit/ros_ws/build
+# 
+# This file includes the relevant testing commands required for 
+# testing this directory and lists subdirectories to be tested as well.
+subdirs("gtest")
+subdirs("ear_control")
+subdirs("gas_monitoring")
+subdirs("light_control")
