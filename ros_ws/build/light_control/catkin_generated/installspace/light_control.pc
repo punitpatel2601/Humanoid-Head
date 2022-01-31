@@ -1,4 +1,4 @@
-prefix=/home/punit/ros_ws/install
+prefix=/home/punit/Humanoid-Head/ros_ws/install
 
 Name: light_control
 Description: Description of light_control

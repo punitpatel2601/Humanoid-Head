@@ -7,6 +7,9 @@
 # new environment variables
 
 # modified environment variables
-export CMAKE_PREFIX_PATH="/home/punit/ros_ws/devel:$CMAKE_PREFIX_PATH"
-export PWD='/home/punit/ros_ws/build'
-export ROS_PACKAGE_PATH="/home/punit/ros_ws/src:$ROS_PACKAGE_PATH"
+export CMAKE_PREFIX_PATH="/home/punit/Humanoid-Head/ros_ws/devel:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/punit/Humanoid-Head/ros_ws/devel/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/home/punit/Humanoid-Head/ros_ws/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
+export PWD='/home/punit/Humanoid-Head/ros_ws/build'
+export PYTHONPATH="/home/punit/Humanoid-Head/ros_ws/devel/lib/python3/dist-packages:$PYTHONPATH"
+export ROS_PACKAGE_PATH="/home/punit/Humanoid-Head/ros_ws/src:$ROS_PACKAGE_PATH"

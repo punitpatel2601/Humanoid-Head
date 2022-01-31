@@ -1,0 +1,8 @@
+prefix=/home/punit/Humanoid-Head/ros_ws/install
+
+Name: simulations
+Description: Description of simulations
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

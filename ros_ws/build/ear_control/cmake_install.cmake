@@ -1,8 +1,8 @@
-# Install script for directory: /home/punit/ros_ws/src/ear_control
+# Install script for directory: /home/punit/Humanoid-Head/ros_ws/src/ear_control
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/punit/ros_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/punit/Humanoid-Head/ros_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/punit/ros_ws/build/ear_control/catkin_generated/installspace/ear_control.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/punit/Humanoid-Head/ros_ws/build/ear_control/catkin_generated/installspace/ear_control.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ear_control/cmake" TYPE FILE FILES
-    "/home/punit/ros_ws/build/ear_control/catkin_generated/installspace/ear_controlConfig.cmake"
-    "/home/punit/ros_ws/build/ear_control/catkin_generated/installspace/ear_controlConfig-version.cmake"
+    "/home/punit/Humanoid-Head/ros_ws/build/ear_control/catkin_generated/installspace/ear_controlConfig.cmake"
+    "/home/punit/Humanoid-Head/ros_ws/build/ear_control/catkin_generated/installspace/ear_controlConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ear_control" TYPE FILE FILES "/home/punit/ros_ws/src/ear_control/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/ear_control" TYPE FILE FILES "/home/punit/Humanoid-Head/ros_ws/src/ear_control/package.xml")
 endif()
 

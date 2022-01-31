@@ -1,4 +1,4 @@
-prefix=/home/punit/ros_ws/install
+prefix=/home/punit/Humanoid-Head/ros_ws/install
 
 Name: gas_monitoring
 Description: Description of gas_monitoring
