@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/punit/Humanoid-Head/ros_ws/install/setup.sh
