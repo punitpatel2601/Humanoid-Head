@@ -25,4 +25,3 @@ if __name__ == '__main__':
     warning_led_sim()
 
     rospy.spin()
-    

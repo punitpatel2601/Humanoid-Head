@@ -10,10 +10,15 @@
 
 
 
-// Setting the pins on board
+// Setting the pins on board for
+
+// Inputs (Sensors, Switches, etc.)
+// #define GAS_SENSOR <PIN>NUMBER>
+// #define LIGHT_SENSOR <PIN_NUMBER>
+
+// Outputs (LEDs, Motors, Sounds, etc.)
 #define GAS_WARN_LED 13
 #define SERVO_MOTOR 9
-// # define GAS_SENSOR <PIN NUMBER>
 
 
 // global variables
@@ -47,7 +52,7 @@ ros::Publisher light_Sensor_Reading("Light_Sensor", &light_reading);
 ros::Subscriber<std_msgs::Int64t> change_Light("Update_Light:, &update_light_intensity);
 */
 
-ros::Subscriber<std_msgs::UInt16> servo_Updates("Change_Ear_Position", change_ear_angle);
+ros::Subscriber<std_msgs::UInt16> servo_Updates("Ear_Controller", change_ear_angle);
 
 
 
