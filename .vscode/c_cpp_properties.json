@@ -3,7 +3,8 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/**"
+                "${workspaceFolder}/**",
+                "${workspaceFolder}/ros_ws/src/rosserial/rosserial_mbed/src/examples/ServoControl/Servo"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
