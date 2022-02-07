@@ -1,0 +1,8 @@
+prefix=/home/punit/Humanoid-Head/ros_ws/devel
+
+Name: monitoring_station
+Description: Description of monitoring_station
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
