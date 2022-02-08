@@ -71,10 +71,3 @@
 /home/punit/Humanoid-Head/ros_ws/build/light_control/CMakeFiles/rebuild_cache.dir
 /home/punit/Humanoid-Head/ros_ws/build/light_control/CMakeFiles/edit_cache.dir
 /home/punit/Humanoid-Head/ros_ws/build/light_control/CMakeFiles/test.dir
-/home/punit/Humanoid-Head/ros_ws/build/monitoring_station/CMakeFiles/install/strip.dir
-/home/punit/Humanoid-Head/ros_ws/build/monitoring_station/CMakeFiles/install/local.dir
-/home/punit/Humanoid-Head/ros_ws/build/monitoring_station/CMakeFiles/install.dir
-/home/punit/Humanoid-Head/ros_ws/build/monitoring_station/CMakeFiles/list_install_components.dir
-/home/punit/Humanoid-Head/ros_ws/build/monitoring_station/CMakeFiles/rebuild_cache.dir
-/home/punit/Humanoid-Head/ros_ws/build/monitoring_station/CMakeFiles/edit_cache.dir
-/home/punit/Humanoid-Head/ros_ws/build/monitoring_station/CMakeFiles/test.dir

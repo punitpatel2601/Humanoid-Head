@@ -19,8 +19,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "gas_monitoring/catkin_generated/package.cmake"
   "light_control/catkin_generated/ordered_paths.cmake"
   "light_control/catkin_generated/package.cmake"
-  "monitoring_station/catkin_generated/ordered_paths.cmake"
-  "monitoring_station/catkin_generated/package.cmake"
   "/home/punit/Humanoid-Head/ros_ws/src/CMakeLists.txt"
   "/home/punit/Humanoid-Head/ros_ws/src/ear_control/CMakeLists.txt"
   "/home/punit/Humanoid-Head/ros_ws/src/ear_control/package.xml"
@@ -28,8 +26,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/punit/Humanoid-Head/ros_ws/src/gas_monitoring/package.xml"
   "/home/punit/Humanoid-Head/ros_ws/src/light_control/CMakeLists.txt"
   "/home/punit/Humanoid-Head/ros_ws/src/light_control/package.xml"
-  "/home/punit/Humanoid-Head/ros_ws/src/monitoring_station/CMakeLists.txt"
-  "/home/punit/Humanoid-Head/ros_ws/src/monitoring_station/package.xml"
   "/opt/ros/noetic/share/catkin/cmake/all.cmake"
   "/opt/ros/noetic/share/catkin/cmake/assert.cmake"
   "/opt/ros/noetic/share/catkin/cmake/atomic_configure_file.cmake"
@@ -194,7 +190,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "ear_control/CMakeFiles/CMakeDirectoryInformation.cmake"
   "gas_monitoring/CMakeFiles/CMakeDirectoryInformation.cmake"
   "light_control/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "monitoring_station/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:

@@ -134,7 +134,6 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/punit/Humanoid-Head/ros_ws/build/ear_control/cmake_install.cmake")
   include("/home/punit/Humanoid-Head/ros_ws/build/gas_monitoring/cmake_install.cmake")
   include("/home/punit/Humanoid-Head/ros_ws/build/light_control/cmake_install.cmake")
-  include("/home/punit/Humanoid-Head/ros_ws/build/monitoring_station/cmake_install.cmake")
 
 endif()
 
