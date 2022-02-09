@@ -1,8 +1,0 @@
-prefix=/home/punit/Humanoid-Head/ros_ws/devel
-
-Name: light_control
-Description: Description of light_control
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 
