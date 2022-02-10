@@ -2,7 +2,7 @@
 
 # imports
 import rospy
-from std_msgs.msg import String, Bool
+from std_msgs.msg import String, Bool, UInt16
 
 
 class GasDetectionNode:
@@ -32,18 +32,36 @@ class GasDetectionNode:
     # Relays Gas Levels forward to toggle LED, start buzzer or send notification to GasMonitoringNode (if required)
     def relay_gas_levels(self):
 
-        # buzzer in this line publishing
-        # update buzzer code here
-
+        # Toggle buzzer for gas
+        run_buzzer = rospy.Publisher("Gas_Buzzer", UInt16, queue_size=10)
+        
         # Toggle LED Blinks
-        blink_led = rospy.Publisher('Gas Warning LEDs', Bool, queue_size=10)
+        blink_led = rospy.Publisher('Gas_Warning_LEDs', Bool, queue_size=10)
+        
+        # Notifing Monitoring station
+        monitor_station = rospy.Publisher('Detection_Notification', String, queue_size=10)
+        
+        
         blink_led.publish(self.gas_flag)
 
-        # Notifing Monitoring station
-        monitor_station = rospy.Publisher('Detection Notification', String, queue_size=10)
-        
+        if self.gas_flag == False:
+            run_buzzer.publish(0)
+
         if self.gas_flag == True:
             monitor_station.publish("Gas Detected!")
+
+            if self.co_level >= self.co_theshold:
+                if self.propane_level >= self.propane_threshold:
+                    run_buzzer.publish(15000)
+                    monitor_station.publish("Both")
+                else:
+                    run_buzzer.publish(5000)
+                    monitor_station.publish("CO")
+                
+            if self.propane_level >= self.propane_threshold:
+                run_buzzer.publish(10000)
+                monitor_station.publish("Propane")
+
             self.gas_flag = False
         
         rate_publishing = rospy.Rate(1) 
