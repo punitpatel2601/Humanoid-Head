@@ -19,7 +19,7 @@
 
 
 // Outputs (LEDs, Motors, Sounds, etc.)
-#define BUZZER 9    //Attach the buzzer to pin number 9
+#define BUZZER 11    //Attach the buzzer to pin number 11
 #define GAS_WARN_LED 13 //Attach the warning led to pin number 13
 
 #define RIGHT_EAR 5 //Attach Right ear Servo to pin 5
@@ -44,10 +44,10 @@ void toggle_warning_led(const std_msgs::Bool led_toggle)
 }
 
 void run_gas_buzzer(const std_msgs::UInt16 toggle_buzzer) {
-  if (toggle_buzzer.data == 0)
-    noTone(BUZZER);
+  if (toggle_buzzer.data != 0)
+    analogWrite(BUZZER, toggle_buzzer.data);
   else
-    tone(BUZZER, toggle_buzzer.data);
+    analogWrite(BUZZER, 0);
 
   delay(1000);
 }
