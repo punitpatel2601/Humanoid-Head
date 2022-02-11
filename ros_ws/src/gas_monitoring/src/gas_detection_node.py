@@ -17,11 +17,13 @@ class GasDetectionNode:
     co_theshold = 1100
     propane_threshold = 4500
 
+    # Set Emotions
+    emots = None
 
     # Constructor for the class GasDetectionNode
     def __init__(self):
         # Setting up the ROS Node to be able to communicate with Arduino
-        rospy.init_node('Gas Detection Node', anonymous=True)
+        rospy.init_node('Gas_Detection_Node', anonymous=True)
 
         # Subscribe to the Gas Sensors
         rospy.Subscriber('gas_simulation', String, self.check_gas_data)
@@ -48,19 +50,21 @@ class GasDetectionNode:
             run_buzzer.publish(0)
 
         if self.gas_flag == True:
-            monitor_station.publish("Gas Detected!")
+            # Set Emotion to Danger here
+
+            monitor_station.publish("Gas Detected! - ")
 
             if self.co_level >= self.co_theshold:
                 if self.propane_level >= self.propane_threshold:
-                    run_buzzer.publish(15000)
-                    monitor_station.publish("Both")
+                    run_buzzer.publish(3)
+                    monitor_station.publish("Both\n")
                 else:
-                    run_buzzer.publish(5000)
-                    monitor_station.publish("CO")
+                    run_buzzer.publish(1)
+                    monitor_station.publish("CO\n")
                 
             if self.propane_level >= self.propane_threshold:
-                run_buzzer.publish(10000)
-                monitor_station.publish("Propane")
+                run_buzzer.publish(2)
+                monitor_station.publish("Propane\n")
 
             self.gas_flag = False
         
@@ -92,8 +96,8 @@ class GasDetectionNode:
         # obtained data from the sensor
         concs = [x for x in data.data.split(" ")]
 
-        self.co_level = concs[0]
-        self.propane_level = concs[1]
+        self.co_level = int(concs[0])
+        self.propane_level = int(concs[1])
 
         self.check_threshold()
 

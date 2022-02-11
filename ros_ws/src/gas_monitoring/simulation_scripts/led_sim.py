@@ -15,9 +15,9 @@ def turn_led(data):
 
 def warning_led_sim():
     # subscribe and listen the data from gas monitoring service
-    rospy.init_node('warning_led_sim', anonymous=True)
+    rospy.init_node('LED', anonymous=True)
 
-    rospy.Subscriber('gas_detected_led_warning_sim', Bool, turn_led)
+    rospy.Subscriber('Gas_Warning_LEDs', Bool, turn_led)
 
 
 
