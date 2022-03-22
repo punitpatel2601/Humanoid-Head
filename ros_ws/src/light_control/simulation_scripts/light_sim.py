@@ -3,7 +3,7 @@
 # imports
 from numpy import rate
 import rospy
-from std_msgs.msg import Bool
+from std_msgs.msg import UInt16
 
 
 # simulates the turning on and off of led on Robot
@@ -16,7 +16,7 @@ def warning_led_sim():
     # subscribe and listen the data from gas monitoring service
     rospy.init_node('Light', anonymous=True)
 
-    rospy.Subscriber('Update_Light_Lumens', Bool, update_light)
+    rospy.Subscriber('Update_Light_Lumens', UInt16, update_light)
 
 
 

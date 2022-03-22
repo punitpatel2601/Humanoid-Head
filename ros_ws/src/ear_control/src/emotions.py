@@ -10,6 +10,6 @@ The first angle corresponds to right ear followed by the angle for the left ear.
 # EMOTION_NAME = [RIGHT EAR SERVO ANGLE, LEFT EAR SERVO ANGLE]
 Happy = [90, 90]
 Danger = [180, 180]
-Sad = [0, 0]
+Scared = [0, 0]
 
 # More emotions if we want to add

@@ -43,28 +43,33 @@ class GasDetectionNode:
         # Notifing Monitoring station
         monitor_station = rospy.Publisher('Detection_Notification', String, queue_size=10)
         
+        # Emotion Manager
+        update_emotion = rospy.Publisher('Gas_Mon_Emotion', UInt16, queue_size=10)
         
         blink_led.publish(self.gas_flag)
 
         if self.gas_flag == False:
             run_buzzer.publish(0)
+            update_emotion.publish(0)
 
         if self.gas_flag == True:
-            # Set Emotion to Danger here
-
+            
             monitor_station.publish("Gas Detected! - ")
 
             if self.co_level >= self.co_theshold:
                 if self.propane_level >= self.propane_threshold:
                     run_buzzer.publish(3)
                     monitor_station.publish("Both\n")
+                    update_emotion.publish(2)
                 else:
                     run_buzzer.publish(1)
                     monitor_station.publish("CO\n")
+                    update_emotion.publish(1)
                 
             if self.propane_level >= self.propane_threshold:
                 run_buzzer.publish(2)
                 monitor_station.publish("Propane\n")
+                update_emotion.publish(1)
 
             self.gas_flag = False
         
