@@ -1,1 +1,27 @@
-# manual position setter
+#!/usr/bin/env python3 
+
+import rospy
+from std_msgs.msg import UInt16
+
+
+def manual_ear_positioning():
+
+    manu_pub = rospy.Publisher('Manual_Ear_Controller', UInt16, queue_size=10)
+
+    rospy.init_node('Ear_Positioning_Station', anonymous=True)
+    rate = rospy.Rate(1)
+
+    while not rospy.is_shutdown():
+        emo_id = input("Enter ID:")
+
+        manu_pub.publish(int(emo_id))
+
+        rate.sleep()
+
+
+if __name__ == '__main__':
+    try:
+        manual_ear_positioning()
+    except rospy.ROSInterruptException:
+        pass
+
