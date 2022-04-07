@@ -17,6 +17,7 @@ default_emot = Idle
 
 # Sets overall emotion - prioritizing gas, followed by manual
 def set_emotion():
+    global gas_flag, gas_emot, manual_flag, man_emot, default_emot
     if gas_flag == True:
         return gas_emot
     elif manual_flag == True:

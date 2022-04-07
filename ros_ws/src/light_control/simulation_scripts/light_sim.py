@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 # imports
-from numpy import rate
 import rospy
 from std_msgs.msg import UInt16
 

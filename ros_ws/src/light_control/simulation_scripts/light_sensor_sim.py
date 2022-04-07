@@ -29,9 +29,9 @@ def light_sen_sim():
                 i = 0
 
 
-        # send gas concentration to monitoring station
+        # send light concentration to monitoring station
         data_obtained = light_on
-
+        print(data_obtained)
         # rospy.loginfo(co_conc + "\n" + pro_conc + "\n")
         pub.publish(data_obtained)
 
