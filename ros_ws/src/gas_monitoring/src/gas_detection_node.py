@@ -41,20 +41,15 @@ class GasDetectionNode:
         run_buzzer = rospy.Publisher("Gas_Buzzer", UInt16, queue_size=10)
         
         # Toggle LED Blinks
-        blink_co_led = rospy.Publisher('CO_Warning_LED', Bool, queue_size=10)
-        blink_prop_led = rospy.Publisher('Prop_Warning_LED', Bool, queue_size=10)
+        blink_co_led = rospy.Publisher('CO_Warning_LED', UInt16, queue_size=10)
+        blink_prop_led = rospy.Publisher('Prop_Warning_LED', UInt16, queue_size=10)
         
         # Notifing Monitoring station
         monitor_station = rospy.Publisher('Detection_Notification', String, queue_size=10)
         
         # Emotion Manager
         update_emotion = rospy.Publisher('Gas_Emotion', UInt16, queue_size=10)
-        
-        
-        # Blink the lights based on the gas flag - true is detected, false if not detected
-        blink_co_led.publish(self.co_flag)
-        blink_prop_led.publish(self.pro_flag)
-
+      
         # Turn off the buzzer if no gas is detected
         if self.co_flag == False and self.pro_flag == False:
             run_buzzer.publish(0)
@@ -72,7 +67,8 @@ class GasDetectionNode:
         if self.co_flag == True:
             update_emotion.publish(1)
             monitor_station.publish("\nDetected Gas - ")
-            run_buzzer.publish(1)
+            run_buzzer.publish(100)
+            blink_co_led.publish(1024 - self.co_level)
             monitor_station.publish("CO\t")
 
             self.co_flag = False
@@ -80,13 +76,14 @@ class GasDetectionNode:
         if self.pro_flag == True:
             update_emotion.publish(1)
             monitor_station.publish("\nDetected Gas - ")
-            run_buzzer.publish(2)
+            run_buzzer.publish(200)
+            blink_prop_led.publish(1024 - self.propane_level)
             monitor_station.publish("Propane\t")
 
             self.pro_flag = False
 
         if self.pro_flag == True and self.co_flag == True:
-            run_buzzer.publish(7)
+            run_buzzer.publish(50)
         
         self.co_last = self.co_level
         self.prop_last = self.propane_level
