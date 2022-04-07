@@ -27,8 +27,8 @@ class GasDetectionNode:
         # Setting up the ROS Node to be able to communicate with Arduino
         rospy.init_node('Gas_Detection_Node', anonymous=True)
 
-        rospy.Subscriber('MQ7', UInt16, self.co_gas_data)
-        rospy.Subscriber('MQ6', UInt16, self.prop_gas_data)
+        rospy.Subscriber('MQ6_Sensor', UInt16, self.prop_gas_data)
+        rospy.Subscriber('MQ7_Sensor', UInt16, self.co_gas_data)
 
         rospy.spin()
 

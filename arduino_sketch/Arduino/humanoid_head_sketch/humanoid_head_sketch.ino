@@ -14,6 +14,9 @@
 
 
 // Inputs (Sensors, Switches, etc.)
+#define LIGHT_SENSOR_F A4
+#define LIGHT_SENSOR_R A5
+
 #define MQ6_SENSOR A0
 #define MQ7_SENSOR A1
 
@@ -30,7 +33,6 @@
 
 // global variables
 ros::NodeHandle nh;
-std_msgs::String gas_reading;
 
 Servo rServo;
 Servo lServo;
@@ -40,10 +42,11 @@ Servo lServo;
 void toggle_co_led(const std_msgs::Bool & led_toggle)
 {
   if (led_toggle.data == true)
-    while(1) {
+    while (1) {
       digitalWrite(CO_WARN_LED, HIGH);
       delay(100);
       digitalWrite(CO_WARN_LED, LOW);
+      delay(100);
     }
   else
     digitalWrite(CO_WARN_LED, LOW);
@@ -52,10 +55,11 @@ void toggle_co_led(const std_msgs::Bool & led_toggle)
 void toggle_prop_led(const std_msgs::Bool & led_toggle)
 {
   if (led_toggle.data == true)
-    while(1) {
+    while (1) {
       digitalWrite(PROP_WARN_LED, HIGH);
       delay(100);
       digitalWrite(PROP_WARN_LED, LOW);
+      delay(100);
     }
   else
     digitalWrite(PROP_WARN_LED, LOW);
@@ -84,9 +88,17 @@ void update_outLight(const std_msgs::UInt16 & lumens) {
 }
 
 
+std_msgs::UInt16 light_val;
+ros::Publisher front_light_sensor("Front_Light_Sensor", &light_val);
+ros::Publisher back_light_sensor("Back_Light_Sensor", &light_val);
+
+std_msgs::UInt16 gas_val;
+ros::Publisher mq6_sensor("MQ6_Sensor", &gas_val);
+ros::Publisher mq7_sensor("MQ7_Sensor", &gas_val);
+
+
 ros::Subscriber<std_msgs::Bool> co_warning_Led("CO_Warning_LED", toggle_co_led);
 ros::Subscriber<std_msgs::Bool> prop_warning_Led("Prop_Warning_LED", toggle_prop_led);
-
 
 ros::Subscriber<std_msgs::UInt16> gas_buzzer("Gas_Buzzer", run_gas_buzzer);
 
@@ -100,11 +112,14 @@ void setup()
 {
   Serial.begin(57600);
 
+  pinMode(LIGHT_SENSOR_F, INPUT);
+  pinMode(LIGHT_SENSOR_R, INPUT);
+
   pinMode(MQ6_SENSOR, INPUT);
   pinMode(MQ7_SENSOR, INPUT);
 
   pinMode(BUZZER, OUTPUT);
-  
+
   pinMode(CO_WARN_LED, OUTPUT);
   pinMode(PROP_WARN_LED, OUTPUT);
 
@@ -115,9 +130,15 @@ void setup()
 
   nh.initNode();
 
+  nh.advertise(front_light_sensor);
+  nh.advertise(back_light_sensor);
+
+  nh.advertise(mq6_sensor);
+  nh.advertise(mq7_sensor);
+
   nh.subscribe(co_warning_Led);
   nh.subscribe(prop_warning_Led);
-  
+
   nh.subscribe(gas_buzzer);
 
   nh.subscribe(right_servo);
@@ -126,11 +147,26 @@ void setup()
   nh.subscribe(blue_light);
 }
 
-int gas_sensor;
+int light_v;
+int gas_reads;
 
 void loop()
 {
-  std_msgs::String gas_reads;
+  light_v = analogRead(A4);
+  light_val.data = light_v;
+  front_light_sensor.publish(&light_val);
+
+  light_v = analogRead(A5);
+  light_val.data = light_v;
+  back_light_sensor.publish(&light_val);
+
+  gas_reads = analogRead(A0);
+  gas_val.data = gas_reads;
+  mq6_sensor.publish(&gas_val);
+
+  gas_reads = analogRead(A1);
+  gas_val.data = gas_reads;
+  mq7_sensor.publish(&gas_val);
 
   delay(1000);
 
