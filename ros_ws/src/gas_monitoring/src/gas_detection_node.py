@@ -7,7 +7,8 @@ from std_msgs.msg import String, Bool, UInt16
 
 class GasDetectionNode:
     # A Global Boolean that keeps track if Gas (either CO or Propane) is detected
-    gas_flag = False
+    co_flag = False
+    pro_flag = False
 
     # Stores current levels of Gases
     co_level = 0
@@ -18,8 +19,8 @@ class GasDetectionNode:
     prop_last = 0
 
     # Stores Thresholds for the gases
-    co_theshold = 1100
-    propane_threshold = 4500
+    co_theshold = 400
+    propane_threshold = 700
 
 
     # Constructor for the class GasDetectionNode
@@ -34,7 +35,7 @@ class GasDetectionNode:
 
 
     # Relays Gas Levels forward to toggle LED, start buzzer or send notification to GasMonitoringNode (if required)
-    def relay_gas_levels(self, gas_id):
+    def relay_gas_levels(self):
 
         # Toggle buzzer for gas
         run_buzzer = rospy.Publisher("Gas_Buzzer", UInt16, queue_size=10)
@@ -51,17 +52,15 @@ class GasDetectionNode:
         
         
         # Blink the lights based on the gas flag - true is detected, false if not detected
-        if gas_id == 1:
-            blink_co_led.publish(self.gas_flag)
-        elif gas_id == 2:
-            blink_prop_led.publish(self.gas_flag)
+        blink_co_led.publish(self.co_flag)
+        blink_prop_led.publish(self.pro_flag)
 
         # Turn off the buzzer if no gas is detected
-        if self.gas_flag == False:
+        if self.co_flag == False and self.pro_flag == False:
             run_buzzer.publish(0)
             monitor_station.publish("\nNo Gas Detected...")
             # No gas above threshold but increasing alarmingly
-            if self.propane_level >= self.propane_threshold / 2 or self.co_level >= self.co_theshold / 2:
+            if (self.propane_level >= self.propane_threshold / 2) or (self.co_level >= self.co_theshold / 2):
                 if self.co_level > self.co_last or self.propane_level > self.prop_last:
                     update_emotion.publish(2)
                 else:
@@ -70,22 +69,24 @@ class GasDetectionNode:
                 update_emotion.publish(0)
 
         # Turn of respective things for gas detection
-        if self.gas_flag == True:
-            
+        if self.co_flag == True:
             update_emotion.publish(1)
             monitor_station.publish("\nDetected Gas - ")
-            
-            if self.co_level >= self.co_theshold and self.propane_level >= self.propane_threshold:
-                run_buzzer.publish(7)
-                monitor_station.publish("Both\t")
-            elif self.co_level >= self.co_theshold:
-                run_buzzer.publish(1)
-                monitor_station.publish("CO\t")
-            elif self.propane_level >= self.propane_threshold:
-                run_buzzer.publish(2)
-                monitor_station.publish("Propane\t")
+            run_buzzer.publish(1)
+            monitor_station.publish("CO\t")
 
-            self.gas_flag = False
+            self.co_flag = False
+
+        if self.pro_flag == True:
+            update_emotion.publish(1)
+            monitor_station.publish("\nDetected Gas - ")
+            run_buzzer.publish(2)
+            monitor_station.publish("Propane\t")
+
+            self.pro_flag = False
+
+        if self.pro_flag == True and self.co_flag == True:
+            run_buzzer.publish(7)
         
         self.co_last = self.co_level
         self.prop_last = self.propane_level
@@ -101,9 +102,9 @@ class GasDetectionNode:
         # of concentration during testing of sensors
         if self.co_level >= self.co_theshold:
             rospy.loginfo("CO PRESENT!!!")
-            self.gas_flag = True
+            self.co_flag = True
         
-        self.relay_gas_levels(1)
+        self.relay_gas_levels()
 
     # Checks and Compares the thresholds of the Gases
     def check_prop_threshold(self):
@@ -112,9 +113,8 @@ class GasDetectionNode:
         # of concentration during testing of sensors
         if self.propane_level >= self.propane_threshold:
             rospy.loginfo("Propane PRESENT!!!")
-            self.gas_flag = True
+            self.pro_flag = True
         
-        self.relay_gas_levels(2)
 
 
     # Receives the Data from the sensors and compares it with respective thresholds
