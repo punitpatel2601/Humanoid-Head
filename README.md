@@ -46,15 +46,15 @@ Loading the Program on Arduino:
 
 <p>
 Open a terminal and navigate to "ros_ws" directory and the start ROS service:
-    >> roscore
+        >> roscore
 
 <p>
 Connecting to the Arduino:
 
 Open a new terminal and follow the steps belows to connect your Arduino UNO board to ROS.
-    >> source devel/setup.bash
-    >> sudo chmod 666 /dev/ttyACM0
-    >> rosrun rosserial_python serial_node.py /dev/ttyACM0
+        >> source devel/setup.bash
+        >> sudo chmod 666 /dev/ttyACM0
+        >> rosrun rosserial_python serial_node.py /dev/ttyACM0
 
 Note: '/dev/ttyACM0' can be different if your Arduino is connected to different port.
 </p>
@@ -63,9 +63,20 @@ Note: '/dev/ttyACM0' can be different if your Arduino is connected to different 
 <h4>Run any module indiviually</h4>
 
 Open a new terminal for every service. 
-    >> source devel/setup.bash
-    >> rosrun "name_of_the_package" "name_of_the_module"
+        >> source devel/setup.bash
+        >> rosrun "name_of_the_package" "name_of_the_module"
 
 (below is an example for running "gas_detection_node")
-    >> source devel/setup.bash
-    >> rosrun gas_monitoring gas_detection_node.py
+        >> source devel/setup.bash
+        >> rosrun gas_monitoring gas_detection_node.py
+</p>
+
+<p>
+Description of each module (file):
+
+1. gas_detection_node.py - Detects the Gas by looking at the data obtained from Robot.
+2. gas_monitoring_node.py - Detects and Displays the Gas detected
+3. front_light_node.py - Detects the Current ambient light setting and Then updates the output light.
+4. ear_pos_control_station.py - Sets the emotion by controlling the ears, set by manual operator.
+5. ear_servo_control_node.py  - Checks all the emotions from different packages, set the most prioritized emotion.
+</p>
