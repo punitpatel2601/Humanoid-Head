@@ -17,13 +17,14 @@ gas_flag = False
 manual_flag = False
 light_flag = False
 
+# Stores distinct emotions from different parts of the system
 gas_emot = Idle
 man_emot = Idle
 light_flag = Idle
 default_emot = Idle
 
 
-# Sets overall emotion - prioritizing gas, followed by manual
+# Sets overall emotion - prioritizing gas, followed by manual and then light
 def set_emotion():
     if gas_flag == True:
         return gas_emot
@@ -75,13 +76,15 @@ def light_selected_emotion(id):
         light_flag = False
         print("Idle\n")
 
-
+# Set the emotion conveyed by the Gas Module
 def change_emotion(message):
     gas_selected_emotion(message.data)
 
+# Set the emotion override by manual operator
 def manual_emotion(message):
     man_set_emotion(message.data)
 
+# Set the light sensor packages emotion
 def light_emotion(message):
     light_selected_emotion(message.data)
 
@@ -96,11 +99,13 @@ def ear_controller():
     rospy.init_node('Ear_Controller', anonymous=True)
     rate = rospy.Rate(1)
 
+    # Subscribe to listen to different emotions
     rospy.Subscriber('Manual_Ear_Controller', UInt16, manual_emotion)
     rospy.Subscriber('Gas_Emotion', UInt16, change_emotion)
     rospy.Subscriber('Light_Emotion', UInt16, light_emotion)
     
     while not rospy.is_shutdown():
+        # select prioritized emotion
         emotion_selected = set_emotion()
         
         # send the ear angles to the robot

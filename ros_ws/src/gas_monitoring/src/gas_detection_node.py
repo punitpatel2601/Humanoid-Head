@@ -19,6 +19,7 @@ class GasDetectionNode:
     prop_last = 0
 
     # Stores Thresholds for the gases
+    # These can be changed to trigger alarm sooner or later
     co_theshold = 400
     propane_threshold = 700
 
@@ -63,7 +64,7 @@ class GasDetectionNode:
             else:
                 update_emotion.publish(0)
 
-        # Turn of respective things for gas detection
+        # Turn on/off respective things for gas detection
         if self.co_flag == True:
             update_emotion.publish(1)
             monitor_station.publish("\nDetected Gas - ")
@@ -82,6 +83,7 @@ class GasDetectionNode:
 
             self.pro_flag = False
 
+        # If both gases detected, change buzzer tone
         if self.pro_flag == True and self.co_flag == True:
             run_buzzer.publish(50)
         
@@ -95,8 +97,6 @@ class GasDetectionNode:
     # Checks and Compares the thresholds of the Gases
     def check_co_threshold(self):
         # simulation of Gas Present Condition for CO and Propane
-        # Needs to be updated for the correct values 
-        # of concentration during testing of sensors
         if self.co_level >= self.co_theshold:
             rospy.loginfo("CO PRESENT!!!")
             self.co_flag = True
@@ -106,8 +106,6 @@ class GasDetectionNode:
     # Checks and Compares the thresholds of the Gases
     def check_prop_threshold(self):
         # simulation of Gas Present Condition for CO and Propane
-        # Needs to be updated for the correct values 
-        # of concentration during testing of sensors
         if self.propane_level >= self.propane_threshold:
             rospy.loginfo("Propane PRESENT!!!")
             self.pro_flag = True
@@ -118,12 +116,14 @@ class GasDetectionNode:
     def co_gas_data(self, data):
         # obtained data from the sensor
         self.co_level = data.data
+        print(self.co_level)
         self.check_co_threshold()
 
     # Receives the Data from the sensors and compares it with respective thresholds
     def prop_gas_data(self, data):
         # obtained data from the sensor
         self.propane_level = data.data
+        print(self.propane_level)
         self.check_prop_threshold()
 
 
