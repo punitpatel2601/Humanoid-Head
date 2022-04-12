@@ -11,7 +11,7 @@ def update_light(recieved):
     rospy.loginfo("Light lumens is: ")
     rospy.loginfo(recieved.data)
 
-    ull = rospy.Publisher("Update_Light_Lumens", Bool, queue_size=10)
+    ull = rospy.Publisher("Update_Light_Lumens_sim", Bool, queue_size=10)
     rate = rospy.Rate(1)
     ull.publish(True)
     rate.sleep()
@@ -20,7 +20,7 @@ def warning_led_sim():
     # subscribe and listen the data from gas monitoring service
     rospy.init_node('Light_Controller', anonymous=True)
 
-    rospy.Subscriber('light_simulation', UInt16, update_light)
+    rospy.Subscriber('light_sensor', UInt16, update_light)
 
 
 

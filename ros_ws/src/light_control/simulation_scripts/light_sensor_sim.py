@@ -8,7 +8,7 @@ from std_msgs.msg import UInt16
 # simulates the sensor
 def light_sen_sim():
     # publish the sensor data
-    pub = rospy.Publisher('light_simulation', UInt16, queue_size=10)
+    pub = rospy.Publisher('light_sensor', UInt16, queue_size=10)
     rospy.init_node('light_sensor_sim', anonymous=True)
     rate = rospy.Rate(1)
     
@@ -18,18 +18,22 @@ def light_sen_sim():
 
     while not rospy.is_shutdown():
         
-        if i <= 20:
-            light_on += 10
-            i+=1
-        elif i > 0:
-            light_on -= 10
-            i-=15
+        if light_on <= 1023 and i == 0:
+            light_on += 100
+        else:
+            i = 1
 
-        # send gas concentration to monitoring station
+        if i == 1:
+            light_on -= 100
+            if light_on <= 200:
+                i = 0
+
+
+        # send light concentration to monitoring station
         data_obtained = light_on
-
+        print(data_obtained)
         # rospy.loginfo(co_conc + "\n" + pro_conc + "\n")
-        pub.publish(light_on)
+        pub.publish(data_obtained)
 
         rate.sleep()
 

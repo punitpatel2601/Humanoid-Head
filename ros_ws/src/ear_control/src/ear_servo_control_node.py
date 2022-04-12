@@ -2,21 +2,91 @@
 
 # imports
 import rospy
-import emotions
 from std_msgs.msg import UInt16
 
+emo_id = 0
 
-# Hard Coded Function to alter Emotions // Needs to be updated
-def select_emotion(id):
-    if int(id%3) == 0:
-        print("Danger\n")
-        return emotions.Danger
-    elif int(id/2) == 0:
-        print("Sad\n")
-        return emotions.Sad
+# EMOTION_NAME = [RIGHT EAR SERVO ANGLE, LEFT EAR SERVO ANGLE]
+Idle = [90, 90]
+Danger = [180, 180]
+Caution = [0, 0]
+
+
+# Flags to priortize emotions
+gas_flag = False
+manual_flag = False
+light_flag = False
+
+# Stores distinct emotions from different parts of the system
+gas_emot = Idle
+man_emot = Idle
+light_flag = Idle
+default_emot = Idle
+
+
+# Sets overall emotion - prioritizing gas, followed by manual and then light
+def set_emotion():
+    if gas_flag == True:
+        return gas_emot
+    elif manual_flag == True:
+        return man_emot
+    elif light_flag == True:
+        return light_emot
     else:
-        print("Happy\n")
-        return emotions.Happy
+        return default_emot
+
+
+# Emotion set by operator
+def man_set_emotion(id):
+    global manual_flag, man_emot
+    if id == 1:
+        manual_flag = True
+        print("Man - Danger\n")
+        man_emot = Danger
+    elif id == 2:
+        manual_flag = True
+        print("Man - Caution\n")
+        man_emot = Caution
+    else:
+        manual_flag = False
+        
+# Emotions set by gas monitoring node
+def gas_selected_emotion(id):  
+    global gas_flag, gas_emot
+    if id == 1:
+        gas_flag = True
+        print("Gas - Danger\n")
+        gas_emot = Danger
+    elif id == 2:
+        gas_flag = True
+        print("Gas - Caution\n")
+        gas_emot = Caution
+    else:
+        gas_flag = False
+        print("Idle\n")
+
+# Emotions set by gas monitoring node
+def light_selected_emotion(id):  
+    global light_flag, light_emot
+    if id == 1:
+        light_flag = True
+        print("Light - Caution\n")
+        light_emot = Caution
+    else:
+        light_flag = False
+        print("Idle\n")
+
+# Set the emotion conveyed by the Gas Module
+def change_emotion(message):
+    gas_selected_emotion(message.data)
+
+# Set the emotion override by manual operator
+def manual_emotion(message):
+    man_set_emotion(message.data)
+
+# Set the light sensor packages emotion
+def light_emotion(message):
+    light_selected_emotion(message.data)
 
 
 # Controls the ears by sending the angle data to Arduino Board
@@ -29,16 +99,15 @@ def ear_controller():
     rospy.init_node('Ear_Controller', anonymous=True)
     rate = rospy.Rate(1)
 
-    # following snippet simulates different emotions (hard coded)
-    # would be updated so that it is automatic later on
-    # and try to make it relevant to what robot is experiencing
-
-    i = 0
-    while not rospy.is_shutdown():
-        
-        i += 1
-        emotion_selected = select_emotion(i)
+    # Subscribe to listen to different emotions
+    rospy.Subscriber('Manual_Ear_Controller', UInt16, manual_emotion)
+    rospy.Subscriber('Gas_Emotion', UInt16, change_emotion)
+    rospy.Subscriber('Light_Emotion', UInt16, light_emotion)
     
+    while not rospy.is_shutdown():
+        # select prioritized emotion
+        emotion_selected = set_emotion()
+        
         # send the ear angles to the robot
         right_angle_publisher.publish(emotion_selected[0])
         left_angle_publisher.publish(emotion_selected[1])
